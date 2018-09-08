@@ -1,5 +1,5 @@
 from rest_framework import status, viewsets
-from App.serializers.user_serializer import UserSerializer,ProfileSerializer
+from App.user.user_serializer import UserSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
