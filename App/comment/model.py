@@ -3,7 +3,7 @@ from App.user.model import User
 from App.problem.model import Problem
 
 from datetime import datetime
-
+ 
 
 class Comment(models.Model):
     content = models.CharField(max_length=200)
