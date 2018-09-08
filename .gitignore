@@ -160,4 +160,7 @@ pyvenv.cfg
 pip-selfcheck.json
 
 
+#Johan
+.idea/
+
 # End of https://www.gitignore.io/api/macos,python,django
