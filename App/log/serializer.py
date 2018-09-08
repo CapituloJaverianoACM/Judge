@@ -1,4 +1,4 @@
-from App.models import Log
+from .model import Log
 from rest_framework import serializers
 
 

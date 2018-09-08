@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from App.models import Profile
+from .model import Profile
 from django.contrib.auth.models import User
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     user = serializers.Field(write_only=True, required=False)
@@ -11,7 +12,6 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data, user):
         return Profile.objects.create(user=user, **validated_data)
-
 
 
 class UserSerializer(serializers.ModelSerializer):

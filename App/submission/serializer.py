@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from App.models import Submission
+from .model import Submission
+
 
 class SubmissionSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Submission
         fields = '__all__'

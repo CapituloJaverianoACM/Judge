@@ -6,25 +6,27 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from datetime import datetime
 
+
 class ObtainExpiringAuthToken(ObtainAuthToken):
 
     def post(self, request):
-        print("HOLA")
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
 
-            token, created = Token.objects.get_or_create(user=serializer.validated_data['user'])
+            token, created = Token.objects.get_or_create(
+                user=serializer.validated_data['user']
+            )
 
             if not created:
                 token.created = datetime.utcnow()
                 token.save()
-            #TODO verificar si las lineas de abajo son necesarias
-            #user = user_service.get_pk_by_token(token.key)
-            #user = user_service.get_myuser(user)
-            #date = user.password_change
-            #date = date.strftime('%Y-%m-%d')
-            #date = datetime.now
+            # TODO verificar si las lineas de abajo son necesarias
+            # user = user_service.get_pk_by_token(token.key)
+            # user = user_service.get_myuser(user)
+            # date = user.password_change
+            # date = date.strftime('%Y-%m-%d')
+            # date = datetime.now
             response_data = {'token': token.key}
             return Response(
                 response_data,

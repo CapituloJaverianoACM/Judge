@@ -1,7 +1,8 @@
 from rest_framework import status, viewsets
-from App.user.user_serializer import UserSerializer
+from App.user.serializer import UserSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
+
 
 class UserViewSet(viewsets.ViewSet):
 
