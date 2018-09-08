@@ -5,7 +5,8 @@ from . import views
 handler404 = 'views.page_not_found'
 
 urlpatterns = [
-    path('logs/', views.logs),
-    path('user/', views.user),
-    path('login/', views.auth),
+    path('api/logs/', views.logs),
+    path('api/user/', views.user),
+    path('api/login/', views.auth),
+    path('api/problem/', views.problem),
 ]
