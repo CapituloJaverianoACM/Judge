@@ -104,6 +104,7 @@ status
 def judge(id, conn):
     changue_state(id, conn, 1)
     submission = get_submission(id, conn)
+    print(submission)
     source_code = submission[1]
     problem_id = submission[5]
     problem = get_problem(problem_id, conn)
