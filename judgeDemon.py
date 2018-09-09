@@ -138,8 +138,8 @@ def judge(id, conn):
     # problem = get_problem(problem_id, conn)
     time_limit = get_time_limit(problem_id, conn)[0]
     description_id = get_description_id(problem_id, conn)[0]
-    test_cases = get_test_cases(description_id, conn)
     print(description_id)
+    test_cases = get_test_cases(description_id, conn)
     status = 2
     for case in test_cases:
         fileIn = case[2]
