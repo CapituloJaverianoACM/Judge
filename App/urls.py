@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/login/', views.auth),
     path('api/problem/', views.problem),
     path('api/problem/<int:id>/', views.problem_single),
+    path('api/problem/test_case/', views.test_case),
     # path('api/description/', views.description),
     path('api/submission/', views.submission),
     path('api/submission/user/<int:id>/', views.submission_user),

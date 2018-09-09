@@ -21,12 +21,6 @@ class ObtainExpiringAuthToken(ObtainAuthToken):
             if not created:
                 token.created = datetime.utcnow()
                 token.save()
-            # TODO verificar si las lineas de abajo son necesarias
-            # user = user_service.get_pk_by_token(token.key)
-            # user = user_service.get_myuser(user)
-            # date = user.password_change
-            # date = date.strftime('%Y-%m-%d')
-            # date = datetime.now
             response_data = {'token': token.key}
             return Response(
                 response_data,
