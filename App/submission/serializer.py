@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .model import Submission
+from .model import Submission, QueueSubmission
 from App.user.model import User
 from App.problem.model import Problem
 from django.shortcuts import get_object_or_404
@@ -16,4 +16,6 @@ class SubmissionSerializer(serializers.ModelSerializer):
         problem_id = validated_data['problem']
         validated_data['user'] = get_object_or_404(User, id=user_id)
         validated_data['problem'] = get_object_or_404(Problem, id=problem_id)
-        return Submission.objects.create(**validated_data)
+        submission = Submission.objects.create(**validated_data)
+        QueueSubmission.objects.create(submission=submission)
+        return submission
