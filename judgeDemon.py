@@ -43,6 +43,20 @@ def get_submission(id, conn):
     return row[0]
 
 
+def get_source_code(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT source_code FROM App_submission WHERE id = " + str(id))
+    row = cur.fetchall()
+    return row[0]
+
+
+def get_problem_id(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT problem_id FROM App_submission WHERE id = " + str(id))
+    row = cur.fetchall()
+    return row[0]
+
+
 def get_problem(id, conn):
     cur = conn.cursor()
     cur.execute("SELECT * FROM App_problem WHERE id = " + str(id))
@@ -50,9 +64,23 @@ def get_problem(id, conn):
     return row[0]
 
 
+def get_time_limit(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT time_limit FROM App_problem WHERE id = " + str(id))
+    row = cur.fetchall()
+    return row[0]
+
+
 def get_test_cases(id, conn):
     cur = conn.cursor()
     cur.execute("SELECT * FROM App_testcase WHERE description_id = " + str(id))
+    rows = cur.fetchall()
+    return rows
+
+
+def get_description_id(id, conn):
+    cur = conn.cursor()
+    cur.execute("SELECT description_id FROM App_problem WHERE id = " + str(id))
     rows = cur.fetchall()
     return rows
 
@@ -105,10 +133,11 @@ def judge(id, conn):
     changue_state(id, conn, 1)
     submission = get_submission(id, conn)
     print(submission)
-    source_code = submission[1]
-    problem_id = submission[5]
+    source_code = get_source_code(id, conn)[0]
+    problem_id = get_problem_id(id, conn)[0]
     problem = get_problem(problem_id, conn)
-    time_limit = problem[4]
+    time_limit = get_time_limit(problem_id, conn)[0]
+    description_id = get_description_id(problem_id, conn)[0]
     test_cases = get_test_cases(problem[9], conn)
     status = 2
     for case in test_cases:
