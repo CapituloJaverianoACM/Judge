@@ -132,7 +132,7 @@ status
 def judge(id, conn):
     changue_state(id, conn, 1)
     submission = get_submission(id, conn)
-    print(submission)
+    # print(submission)
     source_code = get_source_code(id, conn)[0]
     problem_id = get_problem_id(id, conn)[0]
     # problem = get_problem(problem_id, conn)
