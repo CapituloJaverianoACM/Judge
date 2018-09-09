@@ -19,10 +19,9 @@ class Submission(models.Model):
     source_code = models.CharField(max_length=1000)
     veredict = models.CharField(max_length=4, choices=VEREDICT_CHOICES,
                                 default='QUE')
-    # TODO verificar tipo de dato
-    # score = models.DecimalField()
+    score = models.FloatField(default=0.0)
 
     time_stamp = models.DateTimeField(default=datetime.now, blank=True)
-    # TODO verificar la eliminacino por cascade
+    # TODO verificar la eliminacion por cascade
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
