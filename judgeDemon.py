@@ -135,22 +135,22 @@ def judge(id, conn):
     print(submission)
     source_code = get_source_code(id, conn)[0]
     problem_id = get_problem_id(id, conn)[0]
-    problem = get_problem(problem_id, conn)
+    # problem = get_problem(problem_id, conn)
     time_limit = get_time_limit(problem_id, conn)[0]
     description_id = get_description_id(problem_id, conn)[0]
-    test_cases = get_test_cases(problem[9], conn)
+    test_cases = get_test_cases(description_id, conn)
     status = 2
     for case in test_cases:
         fileIn = case[2]
         fileOut = case[3]
         os.system("echo --.-JOHAN--$ > " + PATH_STATIC + "out.out")
-        print(source_code)
+        # print(source_code)
         os.system('chmod +x ' + source_code)
-        command = source_code + ' < ' + fileIn
+        command = "python " + source_code + ' < ' + fileIn
         command += ' > ' + PATH_STATIC + 'out.out'
 
         command_judge = Command(cmd=command)
-        print(command)
+        # print(command)
         res = command_judge.run(timeout=time_limit)
         if res[0]:
             status = res[1]
