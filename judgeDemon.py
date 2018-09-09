@@ -114,11 +114,13 @@ def judge(id, conn):
         fileIn = case[2]
         fileOut = case[3]
         os.system("echo --.-JOHAN--$ > " + PATH_STATIC + "out.out")
+        print(source_code)
         os.system('chmod +x ' + source_code)
         command = source_code + ' < ' + fileIn
         command += ' > ' + PATH_STATIC + 'out.out'
 
         command_judge = Command(cmd=command)
+        print(command)
         res = command_judge.run(timeout=time_limit)
         if res[0]:
             status = res[1]
