@@ -1,4 +1,5 @@
 from rest_framework import status, viewsets
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from App.problem.model import Problem
 from App.problem.serializer import ProblemSerializer
@@ -8,7 +9,6 @@ from django.shortcuts import get_object_or_404
 
 
 class ProblemViewSet(viewsets.ViewSet):
-    permission_classes = [AdminPermissions]
 
     def create(self, request):
         problem_serializer = ProblemSerializer(data=request.data)
@@ -41,3 +41,32 @@ class ProblemViewSet(viewsets.ViewSet):
             "Ok delete",
             status=status.HTTP_200_OK
         )
+
+    def get(self, request):
+        problems_serializer = ProblemSerializer(
+            Problem.objects.all(),
+            many=True
+        )
+        return Response(
+            problems_serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def get_by_id(self, request, id):
+        problem = get_object_or_404(Problem, id=id)
+        problem_serializer = ProblemSerializer(
+            problem
+        )
+        return Response(
+            problem_serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def get_permissions(self):
+        if self.action == 'get':
+            permission_classes = [IsAuthenticated]
+        elif self.action == 'get_by_id':
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [AdminPermissions]
+        return [permission() for permission in permission_classes]

@@ -47,6 +47,26 @@ class UserViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK
         )
 
+    def get(self, request):
+        users_serializer = UserSerializer(
+            User.objects.all(),
+            many=True
+        )
+        return Response(
+            users_serializer.data,
+            status=status.HTTP_200_OK
+        )
+
+    def get_by_id(self, request, id):
+        user = get_object_or_404(User, id=id)
+        user_serializer = UserSerializer(
+            user
+        )
+        return Response(
+            user_serializer.data,
+            status=status.HTTP_200_OK
+        )
+
     def get_permissions(self):
         if self.action == 'create':
             permission_classes = [AllowAny]
