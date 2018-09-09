@@ -16,6 +16,7 @@ urlpatterns = [
     # path('api/description/', views.description),
     path('api/submission/', views.submission),
     path('api/submission/user/<int:id>/', views.submission_user),
+    path('api/submission/user/', views.submission_user_login),
     path('api/submission/problem/<int:id>/', views.submission_problem),
     path('api/comment/', views.comment),
     path('api/comment/<int:id>/', views.comment_problem),
