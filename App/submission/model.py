@@ -25,3 +25,8 @@ class Submission(models.Model):
     # TODO verificar la eliminacion por cascade
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+
+
+class QueueSubmission(models.Model):
+
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
