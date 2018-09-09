@@ -35,18 +35,28 @@ class UserSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
 
         if validated_data.get('profile', False):
-            profile_serializer = ProfileSerializer(data=validated_data['profile'])
+            profile_serializer = ProfileSerializer(
+                data=validated_data['profile']
+            )
             profile_serializer.is_valid(raise_exception=True)
-            profile_serializer.update(instance.profile, validated_data['profile'])
+            profile_serializer.update(
+                instance.profile,
+                validated_data['profile']
+            )
             validated_data.pop('profile')
 
         if validated_data.get('password', False):
             instance.set_password(validated_data['password'])
 
         instance.email = validated_data.get('email', instance.email)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.first_name = validated_data.get(
+            'first_name',
+            instance.first_name
+        )
+        instance.last_name = validated_data.get(
+            'last_name',
+            instance.last_name
+        )
 
         instance.save()
         return instance
-
