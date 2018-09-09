@@ -1,5 +1,4 @@
 from django.db import models
-from App.problem.model import Problem
 
 
 class Description(models.Model):
@@ -10,8 +9,3 @@ class Description(models.Model):
 
     explanation = models.CharField(max_length=500, default="")
     # TODO como representar los test cases
-
-    problem = models.OneToOneField(
-        Problem,
-        on_delete=models.CASCADE
-    )

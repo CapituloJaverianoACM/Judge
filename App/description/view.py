@@ -1,21 +1,22 @@
 from rest_framework import status, viewsets
-from App.problem.serializer import ProblemSerializer
+from App.description.serializer import DescriptionSerializer
 from rest_framework.response import Response
 from App.user.permissions import AdminPermissions
 
 
-class ProblemViewSet(viewsets.ViewSet):
+class DescriptionViewSet(viewsets.ViewSet):
     permission_classes = [AdminPermissions]
-
+    '''
     def create(self, request):
-        problem_serializer = ProblemSerializer(data=request.data)
-        if problem_serializer.is_valid():
-            problem_serializer.create(request.data)
+        description_serializer = DescriptionSerializer(data=request.data)
+        if description_serializer.is_valid():
+            description_serializer.create(request.data)
             return Response(
-                problem_serializer.data,
+                description_serializer.data,
                 status=status.HTTP_201_CREATED
             )
         return Response(
-            problem_serializer.errors,
+            description_serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+    '''

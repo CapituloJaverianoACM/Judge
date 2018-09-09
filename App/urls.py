@@ -9,4 +9,7 @@ urlpatterns = [
     path('api/user/', views.user),
     path('api/login/', views.auth),
     path('api/problem/', views.problem),
+    # path('api/description/', views.description),
+    path('api/submission/', views.submission),
+    path('api/comment/', views.comment),
 ]
