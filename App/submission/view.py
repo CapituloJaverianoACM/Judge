@@ -17,7 +17,6 @@ class SubmissionViewSet(viewsets.ViewSet):
             status=status.HTTP_201_CREATED
         )
 
-
     def get(self, request):
         submissions_serializer = SubmissionSerializer(
             Submission.objects.all(),

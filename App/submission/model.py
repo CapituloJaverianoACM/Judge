@@ -8,10 +8,9 @@ from datetime import datetime
 
 def directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    path = FILE_ROOT + f'submission/{instance.user.id}_{instance.problem.id}.py'
+    path = FILE_ROOT + f'submission/' \
+                       f'{instance.user.id}_{instance.problem.id}.py'
     return path
-
-
 
 
 VEREDICT_CHOICES = (
@@ -26,7 +25,8 @@ VEREDICT_CHOICES = (
 
 
 class Submission(models.Model):
-    veredict = models.CharField(max_length=4, choices=VEREDICT_CHOICES,                                default='QUE')
+    veredict = models.CharField(max_length=4, choices=VEREDICT_CHOICES,
+                                default='QUE')
     score = models.FloatField(default=0.0)
     time_stamp = models.DateTimeField(default=datetime.now, blank=True)
     # TODO verificar la eliminacion por cascade

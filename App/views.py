@@ -2,7 +2,7 @@ from App.log.view import LogViewSet
 from App.user.view import UserViewSet
 from App.auth.view import ObtainExpiringAuthToken
 from App.problem.view import ProblemViewSet
-from App.description.view import DescriptionViewSet,TestCasesViewSet
+from App.description.view import DescriptionViewSet, TestCasesViewSet
 from App.submission.view import SubmissionViewSet
 from App.comment.view import CommmentViewSet
 

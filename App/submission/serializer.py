@@ -14,12 +14,12 @@ class SubmissionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        user_id = validated_data['user']
-        problem_id = validated_data['problem']
+        # user_id = validated_data['user']
+        # problem_id = validated_data['problem']
         # validated_data['user'] =
-        #get_object_or_404(User, id=user_id)
+        # get_object_or_404(User, id=user_id)
         # validated_data['problem'] =
-        #get_object_or_404(Problem, id=problem_id)
+        # get_object_or_404(Problem, id=problem_id)
         submission = Submission.objects.create(**validated_data)
         QueueSubmission.objects.create(submission=submission)
         return submission

@@ -7,6 +7,7 @@ def directory_path(instance, filename):
     path = FILE_ROOT + f'test_cases/{instance.description.problem.id}/'
     return path
 
+
 class Description(models.Model):
     statement = models.CharField(max_length=500, default="")
     input_format = models.CharField(max_length=500, default="")
