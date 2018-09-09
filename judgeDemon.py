@@ -113,7 +113,7 @@ def judge(id, conn):
     if not source_code.endswith('.py'):
         status = 6
     for case in test_cases:
-        if status != 2 :
+        if status != 2:
             break
         fileIn = case[2]
         fileOut = case[3]
