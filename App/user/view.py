@@ -1,3 +1,5 @@
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from rest_framework import status, viewsets
 from App.user.serializer import UserSerializer
 from rest_framework.response import Response
@@ -17,6 +19,16 @@ class UserViewSet(viewsets.ViewSet):
         return Response(
             user_serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def put(self, request):
+        user = request.user
+        user_serializer = UserSerializer(data=request.data, partial=True)
+        user_serializer.is_valid(raise_exception=True)
+        user_serializer.update(user, request.data)
+        return Response(
+            "Update",
+            status=status.HTTP_200_OK
         )
 
     def get_permissions(self):

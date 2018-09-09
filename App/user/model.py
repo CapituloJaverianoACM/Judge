@@ -10,7 +10,7 @@ Rol
 
 
 class Profile(models.Model):
-    career = models.CharField(max_length=30)
+    career = models.CharField(max_length=30, default="N/A")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # TODO verificar los permisos bien
     rol = models.IntegerField(default=1)
