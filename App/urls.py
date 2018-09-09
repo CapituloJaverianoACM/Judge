@@ -7,6 +7,7 @@ handler404 = 'views.page_not_found'
 urlpatterns = [
     path('api/logs/', views.logs),
     path('api/user/', views.user),
+    path('api/user/admin', views.user_admin),
     path('api/login/', views.auth),
     path('api/problem/', views.problem),
     # path('api/description/', views.description),

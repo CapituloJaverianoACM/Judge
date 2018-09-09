@@ -33,3 +33,11 @@ class ProblemViewSet(viewsets.ViewSet):
             "Update problem",
             status=status.HTTP_200_OK
         )
+
+    def delete(self, request):
+        problem_id = request.data.get('id', -1)
+        get_object_or_404(Problem, id=problem_id).delete()
+        return Response(
+            "Ok delete",
+            status=status.HTTP_200_OK
+        )
