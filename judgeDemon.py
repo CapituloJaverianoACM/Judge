@@ -9,7 +9,7 @@ from sqlite3 import Error
 import os
 
 BDPATH = 'db.sqlite3'
-PATH_STATIC = '/Users/johan-smc/Documents/Projects/Judge/Judge/static/'
+PATH_STATIC = './static/'
 
 veredict_choices = ['QUE', 'JUD', 'AC', 'WA', 'TL', 'RTE', 'CE']
 
