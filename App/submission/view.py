@@ -46,3 +46,7 @@ class SubmissionViewSet(viewsets.ViewSet):
             submissions_serializer.data,
             status=status.HTTP_200_OK
         )
+
+    def get_sub_login(self, request):
+        id_user = request.user.id
+        return self.get_by_user(request, id_user)
