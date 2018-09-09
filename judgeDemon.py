@@ -110,11 +110,7 @@ def judge(id, conn):
     time_limit = problem[4]
     test_cases = get_test_cases(problem[9], conn)
     status = 2
-    if not source_code.endswith('.py'):
-        status = 6
     for case in test_cases:
-        if status != 2:
-            break
         fileIn = case[2]
         fileOut = case[3]
         os.system("echo --.-JOHAN--$ > " + PATH_STATIC + "out.out")
