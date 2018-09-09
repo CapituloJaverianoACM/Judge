@@ -5,7 +5,7 @@ from App.problem.model import Problem
 from django.shortcuts import get_object_or_404
 
 
-class CommmentSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
