@@ -1,4 +1,3 @@
-pip==18.0
 pytz==2018.5
 Django==2.1
 djangorestframework==3.8.2
