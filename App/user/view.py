@@ -39,9 +39,9 @@ class UserViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK
         )
 
-    def delete_by_id(self, request):
-        user_id = request.data.get('id', -1)
-        get_object_or_404(User, id=user_id).delete()
+    def delete_by_username(self, request):
+        user_id = request.data.get('username', -1)
+        get_object_or_404(User, username=user_id).delete()
         return Response(
             "Ok delete",
             status=status.HTTP_200_OK
@@ -57,8 +57,8 @@ class UserViewSet(viewsets.ViewSet):
             status=status.HTTP_200_OK
         )
 
-    def get_by_id(self, request, id):
-        user = get_object_or_404(User, id=id)
+    def get_by_username(self, request, username):
+        user = get_object_or_404(User, username=username)
         user_serializer = UserSerializer(
             user
         )
