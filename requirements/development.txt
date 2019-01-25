@@ -1,0 +1,4 @@
+-r common.txt
+django-extensions
+ipython
+flake8==3.5.0
