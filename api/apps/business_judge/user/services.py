@@ -21,6 +21,7 @@ def create_profile(
 
     return profile
 
+
 @transaction.atomic
 def create_user(
         *,

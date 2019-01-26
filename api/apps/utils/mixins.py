@@ -7,7 +7,8 @@ from .utils import get_error_message
 
 class ExceptionHandlerMixin:
     """
-    Mixin that transforms Django and Python exceptions into rest_framework ones.
+    Mixin that transforms Django and Python exceptions into rest_framework
+    ones.
     without the mixin, they return 500 status code which is not desired.
     """
     expected_exceptions = {
