@@ -43,7 +43,9 @@ jobs:
         - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
         - docker build -f Dockerfile.prod -t $CI_PROJECT_NAME .
         - docker tag $CI_PROJECT_NAME $REGISTRY_URL:$TRAVIS_PULL_REQUEST_SHA
+        - echo docker tag $CI_PROJECT_NAME $REGISTRY_URL:$TRAVIS_PULL_REQUEST_SHA
         - docker push $REGISTRY_URL
+        - echo docker push $REGISTRY_URL
         - echo $?
 
 
