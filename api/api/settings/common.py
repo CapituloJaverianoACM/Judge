@@ -38,15 +38,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'business.event',
-    'business.location',
-    'business.payment',
-    'business.seat',
-    'business.ticket',
-    'business.users',
-    'business.zone',
-    'integration',
-    'security',
+    'business_judge.user',
     'utils'
 ]
 
@@ -112,6 +104,7 @@ DATABASES = {
 }
 
 # TODO - is used?
+'''
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'App.auth.model.ExpiringTokenAuthentication',
@@ -120,6 +113,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     )
 }
+'''
 
 
 LANGUAGE_CODE = 'en-us'

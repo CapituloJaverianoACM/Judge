@@ -7,4 +7,4 @@ class JudgeAdminSite(AdminSite):
     site_url = 'http://acm.javeriana.edu.co'
 
 
-judge_admin_site= JudgeAdminSite(name='judge_admin')
+judge_admin_site = JudgeAdminSite(name='judge_admin')

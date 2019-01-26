@@ -16,8 +16,11 @@ class Profile(BaseModel):
         related_name='profile'
     )
     rol = models.IntegerField(
-        choices=UserRol,
-        default=UserRol.USER
+        choices=[
+            (tag.value, tag)
+            for tag in UserRol
+        ],
+        default=UserRol.USER.value
     )
     course = models.ForeignKey(
         Course,
