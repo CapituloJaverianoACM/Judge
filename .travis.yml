@@ -17,7 +17,7 @@ stages:
   - build
 
 env:
-  - REGISTRY_URL=$DOCKER_USERNAME/$TRAVIS_PULL_REQUEST_SHA
+  - REGISTRY_URL=$DOCKER_USERNAME/$CI_PROJECT_NAME
 
 jobs:
   include:
@@ -44,6 +44,7 @@ jobs:
         - docker build -f Dockerfile.prod -t $CI_PROJECT_NAME .
         - docker tag $CI_PROJECT_NAME $REGISTRY_URL:$TRAVIS_PULL_REQUEST_SHA
         - docker push $REGISTRY_URL
+        - echo $?
 
 
 
