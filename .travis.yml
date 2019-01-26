@@ -3,14 +3,50 @@ language: python
 python:
   - 3.6
 
+services:
+  - docker
+  - postgres:9.5
+
+stages:
+  - test
+  - build
+
 env:
   - DJANGO=2.1
 
-install:
-  - pip install -r requirements.txt
+variables:
+  REGISTRY_URL: $DOCKER_USERNAME/$CI_PROJECT_NAME
 
-script:
-  - flake8
-  - ./manage.py makemigrations
-  - ./manage.py migrate
-  - ./manage.py test
+
+test_all:
+  stage: test
+  before_script:
+    - pip install virtualenv
+    - virtualenv .environment
+    - source .environment/bin/activate
+    - pip install -r requirements/test.txt
+  script:
+    - flake8 .
+    - cd api/
+    - python manage.py test --settings=api.settings.test
+    - echo $?
+
+
+build_all:
+  image: docker:latest
+  stage: build
+  only:
+      refs:
+        - dev
+  before_script:
+    - apk --no-cache add python3 py-pip py-setuptools ca-certificates groff less
+    - rm -rf /var/cache/apk/*
+  script:
+    - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+    - docker build -f Dockerfile.prod -t $CI_PROJECT_NAME .
+    - docker tag $CI_PROJECT_NAME $REGISTRY_URL:$CI_COMMIT_SHA
+    - docker push $REGISTRY_URL
+
+
+
+
