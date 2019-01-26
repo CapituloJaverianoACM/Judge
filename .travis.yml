@@ -7,7 +7,7 @@ install: pip install  -r requirements/test.txt
 
 services:
   - docker
-  - postgres
+  - postgresql
 
 stages:
   - test
