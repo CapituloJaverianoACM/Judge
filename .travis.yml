@@ -13,10 +13,6 @@ stages:
   - test
   - build
 
-
-variables:
-  REGISTRY_URL: $DOCKER_USERNAME/$CI_PROJECT_NAME
-
 jobs:
   include:
     - stage: test
@@ -44,5 +40,8 @@ jobs:
         - docker push $REGISTRY_URL
 
 
+
+variables:
+  REGISTRY_URL: $DOCKER_USERNAME/$CI_PROJECT_NAME
 
 
