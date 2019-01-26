@@ -7,7 +7,7 @@ install: pip install  -r requirements/test.txt
 
 services:
   - docker
-  - postgres:9.5
+  - postgres
 
 stages:
   - test
@@ -20,6 +20,7 @@ jobs:
         - pip install virtualenv
         - virtualenv .environment
         - source .environment/bin/activate
+        - pip install -r requirements/test.txt
       script:
         - flake8 .
         - cd api/
