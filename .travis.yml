@@ -11,8 +11,6 @@ stages:
   - test
   - build
 
-env:
-  - DJANGO=2.1
 
 variables:
   REGISTRY_URL: $DOCKER_USERNAME/$CI_PROJECT_NAME
