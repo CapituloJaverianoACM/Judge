@@ -1,0 +1,13 @@
+from .common import *
+
+DEBUG = True
+
+THIRD_PARTY_APPS = THIRD_PARTY_APPS + [
+    'django_extensions',
+]
+
+INSTALLED_APPS = DEFAULT_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+ALLOWED_HOSTS = ['*']
+
+CORS_ORIGIN_ALLOW_ALL = True
