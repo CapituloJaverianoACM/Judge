@@ -35,7 +35,6 @@ jobs:
           refs:
             - dev
       before_script:
-        - apk --no-cache add python3 py-pip py-setuptools ca-certificates groff less
         - rm -rf /var/cache/apk/*
       script:
         - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
