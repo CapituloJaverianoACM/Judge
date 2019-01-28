@@ -130,4 +130,3 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 
-FILE_ROOT = STATIC_ROOT + STATIC_URL
