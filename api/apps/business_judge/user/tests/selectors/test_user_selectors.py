@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 from business_judge.user.selectors import get_user_by_username
 
 
-
 class GetUserByUsernameTests(TestCase):
 
     def setUp(self):
