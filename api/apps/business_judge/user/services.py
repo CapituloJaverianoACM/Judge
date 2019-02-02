@@ -3,14 +3,18 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 
 from .selectors import *
-from .models import Profile
+from .models import Profile, Course
 
 
 def create_profile(
         *,
-        user: User,
-        course: int
+        username: str,
+        course_id: int
 ) -> Profile:
+
+    user = get_user_by_username(username=username)
+
+    course = get_course_by_id(id=course_id)
 
     profile = Profile(
         user=user,
@@ -37,6 +41,8 @@ def create_user(
             or User.objects.filter(username=username).exists():
         raise ValidationError('User already exists.')
 
+    course = get_course_by_id(id=course)
+
     user = User.objects.create(
         first_name=first_name,
         last_name=last_name,
@@ -47,9 +53,10 @@ def create_user(
     user.full_clean()
     user.save()
 
-    course = get_course_by_id(id=course)
-
-    create_profile(user=user, course=course)
+    create_profile(
+        username=user.username,
+        course_id=course.id
+    )
     # TODO - send_confirmation_email(user=user)
 
     return user
