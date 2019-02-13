@@ -1,13 +1,21 @@
 from datetime import datetime
-from rest_framework.authtoken.models import Token
-from django.contrib.auth.models import User
 
-from .selectors import *
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
+from .selectors import (
+    get_token_by_user
+)
+
 
 def get_or_create_token(
         *,
         user: User
 ) -> Token:
+
+    if not user:
+        raise ValidationError('User not exists.')
 
     token, created = Token.objects.get_or_create(
         user=user
