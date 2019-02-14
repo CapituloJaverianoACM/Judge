@@ -19,10 +19,15 @@ class ObtainExpiringAuthToken(
 ):
 
     class OutputUserSerializer(serializers.Serializer):
-        first_name = serializers.CharField()
-        last_name = serializers.CharField()
-        username = serializers.CharField()
-        email = serializers.CharField()
+
+        class Meta:
+            model = User
+            fields = (
+                'first_name',
+                'last_name',
+                'username',
+                'email'
+            )
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
