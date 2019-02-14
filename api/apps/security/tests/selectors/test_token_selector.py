@@ -15,6 +15,7 @@ class GetTokenByUserTests(TestCase):
             username='Test User',
             email='TestUser@test.com'
         )
+        # TODO - create token with date warning
         self.token = Token.objects.create(
             user=self.user
         )
