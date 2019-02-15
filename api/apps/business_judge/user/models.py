@@ -22,6 +22,7 @@ class Profile(BaseModel):
         ],
         default=UserRol.USER.value
     )
+    # TODO - Change to many to many
     course = models.ForeignKey(
         Course,
         on_delete=models.PROTECT,
