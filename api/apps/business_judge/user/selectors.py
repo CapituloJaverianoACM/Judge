@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.db.models.query import QuerySet
+from django.db.models import Sum, Max
 
 from .models import Course
 
@@ -26,3 +28,11 @@ def get_user_by_username(
         raise ValidationError('User not exist')
 
     return user[0]
+
+
+def get_scoreboard_general(
+) -> QuerySet:
+    scoreboard = User.objects.all().agregate(
+        score=0.0
+    )
+    return scoreboard

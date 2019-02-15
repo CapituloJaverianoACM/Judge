@@ -2,7 +2,8 @@ from django.urls import path
 
 
 from .views import (
-    UserViewSet
+    UserViewSet,
+    ScoreBoardViewSet
 )
 
 urlpatterns = [
@@ -14,5 +15,14 @@ urlpatterns = [
             }
         ),
         name='singup'
+    ),
+    path(
+        'scoreboard/',
+        ScoreBoardViewSet.as_view(
+            {
+                'get': 'get_all'
+            }
+        ),
+        name='scoreboard'
     )
 ]
