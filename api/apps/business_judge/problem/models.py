@@ -2,8 +2,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from utils.models import BaseModel
 
-from business_judge.description.models import Description
-
 
 class Problem(BaseModel):
     name = models.CharField(
@@ -16,12 +14,6 @@ class Problem(BaseModel):
     time_limit = models.FloatField(
         default=1.0
     )
-    description = models.OneToOneField(
-        Description,
-        on_delete=models.CASCADE,
-        related_name='problem',
-        verbose_name=_(u'description')
-    )
     # TODO - link?
 
 
@@ -31,7 +23,6 @@ class Tag(BaseModel):
     )
     problem = models.ManyToManyField(
         Problem,
-        on_delete=models.PROTECT,
         related_name='tag',
         verbose_name=_(u'problem')
     )

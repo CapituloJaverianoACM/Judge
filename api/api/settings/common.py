@@ -39,6 +39,11 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'business_judge.user',
+    'business_judge.description',
+    'business_judge.problem',
+    'business_judge.submission',
+    'business_judge.template',
+    'business_judge.test_case',
     'utils'
 ]
 

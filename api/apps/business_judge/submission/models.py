@@ -21,7 +21,7 @@ class Submission(BaseModel):
     verdict = models.CharField(
         max_length=4,
         choices=VERDICT_CHOICES,
-        default=VERDICT_CHOICES.QUE
+        default='QUE'
     )
     time_stamp = models.DateTimeField(
         default=datetime.now,
@@ -44,4 +44,6 @@ class Submission(BaseModel):
         null=False,
         upload_to=directory_submissions_path
     )
-    # TODO - last case passed
+    cases_passed = models.IntegerField(
+        default=0
+    )

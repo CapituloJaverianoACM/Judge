@@ -25,7 +25,7 @@ def directory_path_output(instance, filename):
     return path
 
 
-class TestCase(BaseModel):
+class TestCaseModel(BaseModel):
     # TODO - get number
     number = models.IntegerField(
         default=0

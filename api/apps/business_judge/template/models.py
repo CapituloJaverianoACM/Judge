@@ -12,7 +12,6 @@ class Template(BaseModel):
     )
     problem = models.ManyToManyField(
         Problem,
-        on_delete=models.PROTECT,
         related_name='template',
         verbose_name=_(u'problem')
     )

@@ -29,7 +29,7 @@ class ObtainExpiringAuthToken(
                 'email'
             )
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
 
