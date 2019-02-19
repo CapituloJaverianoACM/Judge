@@ -1,3 +1,4 @@
-from django.contrib import admin
+from business_judge.admin import judge_admin_site
+from .models import Submission
 
-# Register your models here.
+judge_admin_site.register(Submission)

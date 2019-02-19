@@ -27,7 +27,10 @@ class UserViewSet(ExceptionHandlerMixin, viewsets.ViewSet):
 
         create_user(**user_serializer.validated_data)
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(
+            "Ok",
+            status=status.HTTP_201_CREATED
+        )
 
     def get_permissions(self):
         if self.action == 'post':

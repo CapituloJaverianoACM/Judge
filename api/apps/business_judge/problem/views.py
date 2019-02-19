@@ -5,18 +5,31 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .selectors import (
     get_all_problems
 )
-
+from .models import (
+    Tag,
+    Problem
+)
 from utils.mixins import ExceptionHandlerMixin
+from utils.serializers import inline_serializer
 
 
 class ProblemGeneralViewSet(
     ExceptionHandlerMixin,
     viewsets.ViewSet
 ):
-    class OutputSerializer(serializers.Serializer):
-        name = serializers.CharField()
+
+    class OutputSerializer(serializers.ModelSerializer):
         score = serializers.FloatField()
-        tags = serializers.ListField()
+        tags = inline_serializer(
+            many=True,
+            fields={
+                'name': serializers.CharField(),
+            }
+        )
+
+        class Meta:
+            model = Problem
+            fields = ('name', 'score', 'tags')
 
     def get(self, request):
 

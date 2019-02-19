@@ -6,8 +6,10 @@ from .views import (
 
 urlpatterns = [
     path(
-        'problems/',
-        ProblemGeneralViewSet.as_view(),
+        '',
+        ProblemGeneralViewSet.as_view({
+            'get':'get'
+        }),
         name='problems_general'
     )
 ]

@@ -1,3 +1,5 @@
-from django.contrib import admin
+from business_judge.admin import judge_admin_site
+from .models import Problem, Tag
 
-# Register your models here.
+judge_admin_site.register(Problem)
+judge_admin_site.register(Tag)

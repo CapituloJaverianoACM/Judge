@@ -23,6 +23,6 @@ class Tag(BaseModel):
     )
     problem = models.ManyToManyField(
         Problem,
-        related_name='tag',
+        related_name='tags',
         verbose_name=_(u'problem')
     )

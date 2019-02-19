@@ -10,6 +10,6 @@ def get_token_by_user(
 
     token = Token.objects.filter(user=user)
     if not token.exists():
-        raise ValidationError('Token not exist')
+        raise ValidationError('Token not exists')
 
     return token[0]

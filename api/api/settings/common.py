@@ -108,17 +108,16 @@ DATABASES = {
     }
 }
 
-# TODO - is used?
-'''
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'App.auth.model.ExpiringTokenAuthentication',
+        'security.models.ExpiringTokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     )
 }
-'''
+
 
 
 LANGUAGE_CODE = 'en-us'

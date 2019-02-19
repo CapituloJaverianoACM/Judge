@@ -1,6 +1,7 @@
 from rest_framework import (
     status,
-    serializers
+    serializers,
+    viewsets
 )
 from rest_framework.response import Response
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -8,17 +9,22 @@ from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated
 )
+from django.contrib.auth.models import User
 
-from .services import *
+from .services import (
+    get_or_create_token,
+    delete_token_by_user
+)
 from utils.mixins import ExceptionHandlerMixin
 
 
 class ObtainExpiringAuthToken(
     ExceptionHandlerMixin,
-    ObtainAuthToken
+    ObtainAuthToken,
+    viewsets.ViewSet
 ):
 
-    class OutputUserSerializer(serializers.Serializer):
+    class OutputUserSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = User
@@ -28,6 +34,7 @@ class ObtainExpiringAuthToken(
                 'username',
                 'email'
             )
+
 
     def post(self, request, **kwargs):
         serializer = self.serializer_class(data=request.data)
@@ -51,6 +58,7 @@ class ObtainExpiringAuthToken(
         )
 
     def get(self, request):
+
         user_serializer = self.OutputUserSerializer(
             request.user
         )
@@ -60,7 +68,7 @@ class ObtainExpiringAuthToken(
         )
 
     def get_permissions(self):
-        if self.request.method == 'post':
+        if self.action == 'post':
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsAuthenticated]
