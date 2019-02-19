@@ -1,5 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
+
 from utils.models import BaseModel
 
 
@@ -15,6 +16,16 @@ class Problem(BaseModel):
         default=1.0
     )
     # TODO - link?
+
+    def get_sample_test(self):
+        return get_sample_test(
+            problem=self
+        )
+
+
+from business_judge.test_case.selectors import (
+    get_sample_test
+)
 
 
 class Tag(BaseModel):

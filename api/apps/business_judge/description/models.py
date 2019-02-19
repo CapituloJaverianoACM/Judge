@@ -4,6 +4,7 @@ from utils.models import BaseModel
 
 from business_judge.problem.models import Problem
 
+
 class Description(BaseModel):
     statement = models.CharField(
         max_length=1500,

@@ -4,8 +4,8 @@ from utils.models import BaseModel
 
 from business_judge.problem.models import Problem
 
-
 # TODO - verify if the file save good
+
 
 def directory_path_input(instance, filename):
     path = 'test_cases/{0}/input/{1}'\
@@ -47,6 +47,9 @@ class TestCaseModel(BaseModel):
     problem = models.ForeignKey(
         Problem,
         on_delete=models.CASCADE,
-        related_name='test_case',
+        related_name='test_cases',
         verbose_name=_(u'problem')
+    )
+    is_sample = models.BooleanField(
+        default=False
     )

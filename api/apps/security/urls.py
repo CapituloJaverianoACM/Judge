@@ -8,9 +8,9 @@ urlpatterns = [
     path(
         'login/',
         ObtainExpiringAuthToken.as_view({
-            'get':'get',
-            'delete':'delete',
-            'post':'post'
+            'get': 'get',
+            'delete': 'delete',
+            'post': 'post'
         }),
         name='auth'
     ),

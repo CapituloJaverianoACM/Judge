@@ -119,7 +119,6 @@ REST_FRAMEWORK = {
 }
 
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = os.environ.get('TIME_ZONE', 'America/Bogota')
