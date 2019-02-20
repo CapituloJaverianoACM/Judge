@@ -73,6 +73,8 @@ class ProblemSingleViewSet(
                 'number': serializers.IntegerField(),
                 'explanation': serializers.CharField(),
                 # TODO - return input and output
+                'input': serializers.CharField(),
+                'output': serializers.CharField(),
             }
         )
 

@@ -1,7 +1,10 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from utils.models import BaseModel
 
+from utils.models import BaseModel
+from utils.file import (
+    get_data_from_file
+)
 from business_judge.problem.models import Problem
 
 # TODO - verify if the file save good
@@ -53,3 +56,13 @@ class TestCaseModel(BaseModel):
     is_sample = models.BooleanField(
         default=False
     )
+
+    def input(self):
+        return get_data_from_file(
+            file_path=self.file_input.path
+        )
+
+    def output(self):
+        return get_data_from_file(
+            file_path=self.file_output.path
+        )
