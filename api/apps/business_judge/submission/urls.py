@@ -8,8 +8,8 @@ urlpatterns = [
     path(
         '',
         SubmissionViewSet.as_view({
-            'get':'list',
-            'post':'create'
+            'get': 'list',
+            'post': 'create'
         }),
         name='submissions'
     )

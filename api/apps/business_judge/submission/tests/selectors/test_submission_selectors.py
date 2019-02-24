@@ -1,3 +1,4 @@
+import tempfile
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -24,6 +25,7 @@ class GetAllSubmissionsTests(TestCase):
         self.submission = Submission.objects.create(
             user=self.user,
             problem=self.problem,
+            source_code=tempfile.NamedTemporaryFile().name
         )
         self.selector = get_all_submissions
 
@@ -42,7 +44,9 @@ class GetAllSubmissionsTests(TestCase):
 
     def test_order_submission(self):
         submission_add = Submission.objects.create(
-            self.submission
+            user=self.user,
+            problem=self.problem,
+            source_code=tempfile.NamedTemporaryFile().name
         )
         submissions = self.selector()
         self.assertEqual(

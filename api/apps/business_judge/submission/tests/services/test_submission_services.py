@@ -1,3 +1,4 @@
+import tempfile
 from unittest.mock import patch
 
 from django.test import TestCase
@@ -11,6 +12,7 @@ from business_judge.submission.models import Submission
 from business_judge.submission.services import (
     create_submission
 )
+
 
 class CreateSubmissionTest(TestCase):
 
@@ -31,7 +33,7 @@ class CreateSubmissionTest(TestCase):
     ):
         get_user_by_username_mock.return_value = self.user
         get_problem_by_id_mock.return_value = self.problem
-        
+
         self.assertEqual(
             0,
             Submission.objects.count()
@@ -40,7 +42,7 @@ class CreateSubmissionTest(TestCase):
         submission = self.service(
             user=self.user.username,
             problem=self.problem.id,
-            source_code=None
+            source_code=tempfile.NamedTemporaryFile().name
         )
 
         self.assertEqual(

@@ -64,23 +64,23 @@ def get_problems_with_success_rate(
 ) -> QuerySet:
 
     return Problem.objects.filter(id=problem_id).\
-    annotate(
-        success_rate=Count(
-            Case(
-                When(
-                    submission__verdict='AC',
-                    then=F('submission__user')
+        annotate(
+            success_rate=Count(
+                Case(
+                    When(
+                        submission__verdict='AC',
+                        then=F('submission__user')
+                    ),
+                    output_field=IntegerField()
                 ),
-                output_field=IntegerField()
-            ),
-            distinct=True
-        ) / Greatest(
-            Count(
-                'submission__user',
                 distinct=True
-            ),
-            1.0
-        )
+            ) / Greatest(
+                Count(
+                    'submission__user',
+                    distinct=True
+                ),
+                1.0
+            )
     )
 
 
@@ -96,7 +96,6 @@ def get_all_problems(
         username=username
     )
     problems = problems_tried.union(problems_not_tried)
-
 
     return problems
 

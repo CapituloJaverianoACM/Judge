@@ -65,4 +65,3 @@ class SubmissionViewSet(
             'Ok',
             status=status.HTTP_201_CREATED
         )
-
