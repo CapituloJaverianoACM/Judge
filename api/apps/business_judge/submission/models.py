@@ -23,10 +23,6 @@ class Submission(BaseModel):
         choices=VERDICT_CHOICES,
         default='QUE'
     )
-    time_stamp = models.DateTimeField(
-        default=datetime.now,
-        blank=True
-    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -47,3 +43,6 @@ class Submission(BaseModel):
     cases_passed = models.IntegerField(
         default=0
     )
+
+    def get_username(self):
+        return self.user.username
