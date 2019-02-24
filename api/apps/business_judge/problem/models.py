@@ -22,9 +22,18 @@ class Problem(BaseModel):
             problem=self
         )
 
+    def get_success_rate(self):
+        return get_problems_with_success_rate(
+            problem_id=self.id
+        )[0].success_rate
+
 
 from business_judge.test_case.selectors import (
     get_sample_test
+)
+
+from business_judge.problem.selectors import (
+    get_problems_with_success_rate
 )
 
 

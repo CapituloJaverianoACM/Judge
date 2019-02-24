@@ -1,5 +1,13 @@
 from django.db.models.query import QuerySet
-from django.db.models import Max, Count, Value, Case, FloatField
+from django.db.models import (
+    Max,
+    Count,
+    Case,
+    FloatField,
+    IntegerField,
+    When,
+    F,
+)
 from django.db.models.functions import Greatest, Coalesce
 from django.core.exceptions import ValidationError
 
@@ -43,27 +51,53 @@ def get_problems_not_tried(
             submission__user__username=username
         )\
         .annotate(
-            score=Case
-            (
-                default=Value(0.0),
+            score=Case(
+                default=0.0,
                 output_field=FloatField()
             )
         )
+
+
+def get_problems_with_success_rate(
+        *,
+        problem_id: int
+) -> QuerySet:
+
+    return Problem.objects.filter(id=problem_id).\
+    annotate(
+        success_rate=Count(
+            Case(
+                When(
+                    submission__verdict='AC',
+                    then=F('submission__user')
+                ),
+                output_field=IntegerField()
+            ),
+            distinct=True
+        ) / Greatest(
+            Count(
+                'submission__user',
+                distinct=True
+            ),
+            1.0
+        )
+    )
 
 
 def get_all_problems(
         *,
         username: str
 ) -> QuerySet:
+
     problems_tried = get_problems_tried(
         username=username
     )
-
     problems_not_tried = get_problems_not_tried(
         username=username
     )
-
     problems = problems_tried.union(problems_not_tried)
+
+
     return problems
 
 

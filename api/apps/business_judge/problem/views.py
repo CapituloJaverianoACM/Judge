@@ -27,10 +27,19 @@ class ProblemGeneralViewSet(
                 'name': serializers.CharField(),
             }
         )
+        success_rate = serializers.FloatField(
+            source='get_success_rate'
+        )
 
         class Meta:
             model = Problem
-            fields = ('id', 'name', 'score', 'tags')
+            fields = (
+                'id',
+                'name',
+                'score',
+                'tags',
+                'success_rate'
+            )
 
     def get(self, request):
 
@@ -72,7 +81,6 @@ class ProblemSingleViewSet(
             fields={
                 'number': serializers.IntegerField(),
                 'explanation': serializers.CharField(),
-                # TODO - return input and output
                 'input': serializers.CharField(),
                 'output': serializers.CharField(),
             }
