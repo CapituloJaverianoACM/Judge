@@ -22,6 +22,9 @@ class SubmissionViewSet(
         user = serializers.CharField(
             source='get_username'
         )
+        total_cases = serializers.IntegerField(
+            source='get_total_cases'
+        )
 
         class Meta:
             model = Submission
@@ -30,6 +33,7 @@ class SubmissionViewSet(
                 'user',
                 'problem',
                 'cases_passed',
+                'total_cases',
                 'created'
             )
 

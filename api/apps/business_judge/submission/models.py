@@ -46,3 +46,11 @@ class Submission(BaseModel):
 
     def get_username(self):
         return self.user.username
+
+    def get_total_cases(self):
+        return Problem.objects.filter(
+            id=self.problem.id
+        ).Count(
+            'test_cases',
+            distinct=True
+        )
