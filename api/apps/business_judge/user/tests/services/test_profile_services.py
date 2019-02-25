@@ -30,7 +30,8 @@ class CreateProfileTests(TestCase):
 
         profile = self.service(
             username=self.user.username,
-            course_id=self.course.id
+            course_id=self.course.id,
+            phone="12345"
         )
 
         self.assertEqual(1, Profile.objects.count())

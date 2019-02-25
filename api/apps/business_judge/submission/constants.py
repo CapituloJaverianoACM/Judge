@@ -8,7 +8,7 @@ VERDICT_CHOICES = (
     ('CE', 'Compilation Error'),
 )
 
-LANGUAGE_CHOICES =(
+LANGUAGE_CHOICES = (
     ('PY3', 'Python3'),
     ('PY2', 'python2'),
     ('CPP', 'C++')

@@ -42,7 +42,8 @@ class CreateSubmissionTest(TestCase):
         submission = self.service(
             user=self.user.username,
             problem=self.problem.id,
-            source_code=tempfile.NamedTemporaryFile().name
+            source_code=tempfile.NamedTemporaryFile().name,
+            language="PY3"
         )
 
         self.assertEqual(

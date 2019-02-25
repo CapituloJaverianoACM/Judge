@@ -2,6 +2,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 from utils.models import BaseModel
+from .constants import (
+    TYPE_CHOICES
+)
 
 
 class Problem(BaseModel):
@@ -42,7 +45,9 @@ class Tag(BaseModel):
         max_length=100
     )
     type = models.CharField(
-        max_length=5
+        max_length=5,
+        choices=TYPE_CHOICES,
+        default='THEME'
     )
     problem = models.ManyToManyField(
         Problem,
