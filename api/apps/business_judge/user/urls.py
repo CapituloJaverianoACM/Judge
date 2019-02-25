@@ -8,7 +8,7 @@ from .views import (
 
 urlpatterns = [
     path(
-        'singup/',
+        'signup/',
         UserViewSet.as_view(
             {
                 'post': 'post'
