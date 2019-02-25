@@ -5,7 +5,8 @@ import ipaddress
 ALLOWED_HOSTS = list()
 CORS_ORIGIN_WHITELIST = list()
 
-CORS_ORIGIN_ALLOW_ALL = False
+# TODO - change this
+CORS_ORIGIN_ALLOW_ALL = True
 
 if os.environ.get("ALLOW_HOST", None) is not None:
     for host in os.environ.get("ALLOW_HOST", "").split(", "):
