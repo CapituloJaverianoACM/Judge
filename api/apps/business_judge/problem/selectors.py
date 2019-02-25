@@ -84,6 +84,30 @@ def get_problems_with_success_rate(
     )
 
 
+def get_problems_with_success_rate_all(
+) -> QuerySet:
+
+    return Problem.objects.all().\
+        annotate(
+            success_rate=Count(
+                Case(
+                    When(
+                        submission__verdict='AC',
+                        then=F('submission__user')
+                    ),
+                    output_field=IntegerField()
+                ),
+                distinct=True
+            ) / Greatest(
+                Count(
+                    'submission__user',
+                    distinct=True
+                ),
+                1.0
+            )
+    )
+
+
 def get_all_problems(
         *,
         username: str

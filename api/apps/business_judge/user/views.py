@@ -2,6 +2,8 @@ from rest_framework import status, viewsets, serializers
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
+from django.contrib.auth.models import User
+
 from .services import (
     create_user
 )
@@ -46,9 +48,15 @@ class ScoreBoardViewSet(
 ):
     permission_classes = [AllowAny]
 
-    class OuputSerializer(serializers.Serializer):
-        username = serializers.CharField()
+    class OuputSerializer(serializers.ModelSerializer):
         score = serializers.FloatField()
+
+        class Meta:
+            model = User
+            fields = (
+                'username',
+                'score'
+            )
 
     def get_all(self, request):
         scoreboard = self.OuputSerializer(
