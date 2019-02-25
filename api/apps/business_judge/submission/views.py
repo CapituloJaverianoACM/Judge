@@ -41,6 +41,7 @@ class SubmissionViewSet(
         problem = serializers.IntegerField()
         user = serializers.CharField()
         source_code = serializers.FileField()
+        language = serializers.CharField()
 
     def list(self, request):
         submissions_serializer = self.OutputSerializer(

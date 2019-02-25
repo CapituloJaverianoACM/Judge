@@ -9,7 +9,8 @@ from .models import Profile, Course
 def create_profile(
         *,
         username: str,
-        course_id: int
+        course_id: int,
+        phone: str
 ) -> Profile:
 
     user = get_user_by_username(username=username)
@@ -18,7 +19,8 @@ def create_profile(
 
     profile = Profile(
         user=user,
-        course=course
+        course=course,
+        phone=phone
     )
     profile.full_clean()
     profile.save()
@@ -34,7 +36,8 @@ def create_user(
         username: str,
         email: str,
         password: str,
-        course: int
+        course: int,
+        phone: str
 ) -> User:
 
     if User.objects.filter(email=email).exists() \
@@ -55,7 +58,8 @@ def create_user(
 
     create_profile(
         username=user.username,
-        course_id=course.id
+        course_id=course.id,
+        phone=phone
     )
     # TODO - send_confirmation_email(user=user)
 

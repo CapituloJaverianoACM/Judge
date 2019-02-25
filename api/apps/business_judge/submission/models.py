@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 
 from utils.models import BaseModel
 from business_judge.problem.models import Problem
-from .constants import VERDICT_CHOICES
+from .constants import (
+    VERDICT_CHOICES,
+    LANGUAGE_CHOICES
+)
 
 
 def directory_submissions_path(instance, filename):
@@ -42,6 +45,11 @@ class Submission(BaseModel):
     )
     cases_passed = models.IntegerField(
         default=0
+    )
+    language = models.CharField(
+        max_length=5,
+        choices=LANGUAGE_CHOICES,
+        default='PY3'
     )
 
     def get_username(self):

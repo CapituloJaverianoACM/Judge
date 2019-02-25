@@ -74,10 +74,13 @@ def get_scoreboard_general(
     scoreboard = User.objects.raw(
         '''
             SELECT "querytable"."id", "querytable"."username",
+            "querytable"."first_name", "querytable"."last_name",
             SUM("score_temp") as "score"
             FROM (
             SELECT "auth_user"."id" as "id",
              "auth_user"."username" as "username",
+             "auth_user"."first_name" as "first_name",
+             "auth_user"."last_name" as "last_name",
             ((COALESCE(MAX("submission_submission"."cases_passed"), 0)
             / GREATEST(COUNT(DISTINCT "test_case_testcasemodel"."id"), 1.0))
             * "problem_problem"."max_score") AS "score_temp"
@@ -96,7 +99,11 @@ def get_scoreboard_general(
             ON ("user_profile"."user_id" = "querytable"."id")
             WHERE "user_profile"."rol" != 0
             GROUP BY
-            "querytable"."id", "querytable"."username"
+            "querytable"."id",
+            "querytable"."username",
+            "querytable"."first_name",
+            "querytable"."last_name"
+            ORDER BY "score"
         '''
     )
     return scoreboard

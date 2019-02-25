@@ -23,7 +23,8 @@ class CreateUserTests(TestCase):
             'username': 'test',
             'email': 'test@test.com',
             'password': 'test',
-            'course': self.course.id
+            'course': self.course.id,
+            'phone': '123'
         }
 
     @patch('business_judge.user.services.create_profile')

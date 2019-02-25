@@ -41,6 +41,9 @@ class Tag(BaseModel):
     name = models.CharField(
         max_length=100
     )
+    type = models.CharField(
+        max_length=5
+    )
     problem = models.ManyToManyField(
         Problem,
         related_name='tags',

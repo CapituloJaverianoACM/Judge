@@ -29,4 +29,8 @@ class Profile(BaseModel):
         related_name='profile',
         verbose_name=_(u'course')
     )
+    phone = models.CharField(
+        max_length=20,
+        default=""
+    )
     # TODO - images

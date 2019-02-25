@@ -22,6 +22,7 @@ class UserViewSet(ExceptionHandlerMixin, viewsets.ViewSet):
         email = serializers.CharField()
         password = serializers.CharField()
         course = serializers.IntegerField()
+        phone = serializers.CharField()
 
     def post(self, request, *args, **kwargs):
         user_serializer = self.InputSerializer(data=request.data)
@@ -54,6 +55,8 @@ class ScoreBoardViewSet(
         class Meta:
             model = User
             fields = (
+                'first_name',
+                'last_name',
                 'username',
                 'score'
             )
