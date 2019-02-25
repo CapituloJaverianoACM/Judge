@@ -87,11 +87,16 @@ def get_scoreboard_general(
             ON ("submission_submission"."problem_id" = "problem_problem"."id")
             LEFT OUTER JOIN "test_case_testcasemodel" ON
             ("problem_problem"."id" = "test_case_testcasemodel"."problem_id")
+            WHERE
             GROUP BY
             "auth_user"."id",
             "submission_submission"."problem_id",
             "problem_problem"."max_score"
-            ) as "querytable" group by
+            ) as "querytable"
+            LEFT OUTER JOIN "user_profile"
+            ON ("user_profile"."user_id" = "querytable"."id")
+            WHERE "user_profile"."rol" != 0
+            GROUP BY
             "querytable"."id", "querytable"."username"
         '''
     )
