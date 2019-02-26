@@ -23,6 +23,8 @@ RUN pip install -r requirements/production.txt
 
 RUN python api/manage.py collectstatic --settings=api.settings.production
 
+RUN chown -R user:user /code
+
 USER user
 
 VOLUME ["/code/api/run/static"]
