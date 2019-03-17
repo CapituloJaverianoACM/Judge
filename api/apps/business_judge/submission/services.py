@@ -1,6 +1,10 @@
 from .models import Submission
 from business_judge.user.selectors import get_user_by_username
 from business_judge.problem.selectors import get_problem_by_id
+from .tasks import (
+    judge_submission
+)
+
 
 
 def create_submission(
@@ -17,5 +21,8 @@ def create_submission(
         language=language,
         source_code=source_code
     )
+    print("fhisdah")
+    judge_submission.delay()
+    print("2222")
 
     return submission

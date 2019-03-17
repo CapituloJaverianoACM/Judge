@@ -13,6 +13,13 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'run', 'media')
 
 sys.path.append(os.path.normpath(os.path.join(PROJECT_ROOT, 'apps')))
 
+# celery
+CELERY_BROKER_URL = os.environ.get(
+    'BROKER_CELERY',
+    'amqp://guest:guest@localhost//',
+)
+
+
 SECRET_KEY = os.environ.get(
     'SECRET_KEY',
     'x^=!5h-r4vmtz&%&(fio!fnvdm3wpyc5n!r5a@o@&&tfaej@hy'
