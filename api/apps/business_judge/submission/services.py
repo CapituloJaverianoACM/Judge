@@ -20,7 +20,8 @@ def create_submission(
         user: str,
         problem: int,
         language: str,
-        source_code
+        source_code,
+        host_address: str
 ) -> Submission:
 
     submission = Submission.objects.create(
@@ -29,9 +30,11 @@ def create_submission(
         language=language,
         source_code=source_code
     )
-    print("fhisdah")
-    judge_submission.delay(submission.id)
-    print("2222")
+    print("Send to queue")
+    judge_submission.delay(
+        submission.id,
+        host_address
+    )
 
     return submission
 

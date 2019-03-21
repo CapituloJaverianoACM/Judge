@@ -44,6 +44,7 @@ class SubmissionViewSet(
         user = serializers.CharField()
         source_code = serializers.FileField()
         language = serializers.CharField()
+        host_address = serializers.CharField()
 
     def list(self, request):
         submissions_serializer = self.OutputSerializer(
@@ -58,6 +59,7 @@ class SubmissionViewSet(
     def create(self, request):
 
         request.data['user'] = request.user.username
+        request.data['host_address'] = request.get_host()
         submission_serializer = self.InputSerializer(
             data=request.data
         )
