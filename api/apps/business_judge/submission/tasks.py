@@ -1,3 +1,7 @@
+import pathlib
+import signal
+import threading
+import subprocess
 from urllib.error import HTTPError, URLError
 
 from celery import shared_task
@@ -7,10 +11,9 @@ import os
 import json
 
 from business_judge.submission.selectors import get_submission_by_id
-from business_judge.test_case.selectors import (
-    get_output_file_by_id,
-    get_input_file_by_id
-)
+
+
+
 
 @shared_task
 def judge_submission(submission_id, host_address):
@@ -20,33 +23,44 @@ def judge_submission(submission_id, host_address):
     )
     print(token)
     judge_submission_process(
-        submission_id=submission_id
+        submission_id=submission_id,
+        host_address=host_address,
+        token=token
     )
     return submission_id
 
 
 def change_state_submission(
         *,
-        submission: QuerySet,
+        submission,
         verdict: str
 ) -> None:
     '''
     Change the state of submission by de paramd verdict
-    :param submission:
+    :param submission_id:
     :param verdict:
     :return: None
     '''
-    pass
+    submission.verdict = verdict
+    submission.save()
 
 def request(
         *,
         url,
         values,
-        headers
+        headers,
 ):
-    data = urllib.parse.urlencode(values)
-    data = data.encode('ascii')
-    req = urllib.request.Request(url, data, headers)
+
+
+    data = None
+    req = None
+    if values:
+        data = urllib.parse.urlencode(values)
+        data = data.encode('ascii')
+        req = urllib.request.Request(url, data, headers=headers)
+    else:
+        req = urllib.request.Request(url, headers=headers)
+
     response=None
     try:
         response = urllib.request.urlopen(req)
@@ -54,48 +68,112 @@ def request(
         # do something
         print('Error code: ', e.code)
         print("Error message:", e.msg)
+        raise e
+
     except URLError as e:
         # do something
         print('Reason: ', e.reason)
+        raise e
     else:
         # apply encoding constant utf-9
-        response = response.read().decode('utf-8')
-        response = json.loads(response)
+        response = response.read()
         print('good!')
     return response
 
 def get_path_by_binary_file(
         *,
-        file
+        file,
+        name,
+        ext
 ):
-    pass
+    pathlib.Path("files/").mkdir(
+        parents=True,
+        exist_ok=True
+    )
+    name = 'files/'+str(name) + ext
+    f = open(name, "wb")
+    f.write(file)
+    f.close()
+    return f.name
 
 
 def get_source_code(
         *,
-        submission
+        submission_id,
+        host_address,
+        token
 ):
-    pass
+    url = host_address + '/api/submissions/source_code/'+\
+          str(submission_id) + '/'
+    headers = {'User-Agent': 'Mozilla/5.0',
+               'Authorization': 'Token '+ str(token)}
+    values = None
+    response = request(
+        url=url,
+        values=values,
+        headers=headers
+    )
+    path = get_path_by_binary_file(
+        file=response,
+        name=submission_id,
+        ext=".py"
+    )
+    return path
+
 
 
 def get_input_path(
         *,
-        test_case):
-    pass
+        test_case,
+        host_address,
+        token
+):
+    url = host_address + '/api/test_cases/input/' + \
+          str(test_case.id) + '/'
+    headers = {'User-Agent': 'Mozilla/5.0',
+               'Authorization': 'Token ' + str(token)}
+    values = None
+    response = request(
+        url=url,
+        values=values,
+        headers=headers
+    )
+    path = get_path_by_binary_file(
+        file=response,
+        name=test_case.id,
+        ext=".in"
+    )
+    return path
 
 
 def get_output_path(
         *,
-        test_case
+        test_case,
+        host_address,
+        token
 ):
-    pass
+    url = host_address + '/api/test_cases/output/' + \
+          str(test_case.id) + '/'
+    headers = {'User-Agent': 'Mozilla/5.0',
+               'Authorization': 'Token ' + str(token)}
+    values = None
+    response = request(
+        url=url,
+        values=values,
+        headers=headers
+    )
+    path = get_path_by_binary_file(
+        file=response,
+        name=test_case.id,
+        ext=".out"
+    )
+    return path
 
 
 def get_token(
         *,
         host_address: str
 ):
-    print(host_address)
     url = host_address + '/api/login/'
     headers = {'User-Agent': 'Mozilla/5.0'}
     values = {
@@ -107,17 +185,51 @@ def get_token(
         values=values,
         headers=headers
     )
-    print(response['token'])
-    return "hi"
+    response = response.decode('utf-8')
+    response = json.loads(response)
+    return response['token']
+
+def clear_all(
+
+):
+    pass
+
+class Command(object):
+    def __init__(self, cmd):
+        self.cmd = cmd
+        self.process = None
+
+    def run(self, timeout):
+        def target():
+            print('Thread started')
+            self.process = subprocess.Popen(self.cmd, shell=True,
+                                               preexec_fn=os.setsid)
+            self.process.communicate()
+            print('Thread finished')
+
+        thread = threading.Thread(target=target)
+        thread.start()
+
+        thread.join(timeout)
+        if thread.is_alive():
+            print('Terminating process')
+            os.killpg(self.process.pid, signal.SIGTERM)
+            thread.join()
+            return (self.process.returncode, 4)
+        return (self.process.returncode, 5)
 
 
 def judge_submission_process(
         *,
-        submission_id
+        submission_id,
+        host_address,
+        token
 ):
     '''
     Judge submission with specific id
     :param submission_id:
+    :param host_address:
+    :param token:
     :return:
     '''
 
@@ -133,7 +245,9 @@ def judge_submission_process(
     )
 
     source_code = get_source_code(
-        submission=submission
+        submission_id=submission_id,
+        host_address=host_address,
+        token=token
     )
     print(source_code)
     # problem_id = get_problem_id(id, conn)[0]
@@ -142,43 +256,53 @@ def judge_submission_process(
 
     test_cases = submission.problem.test_cases.all()
 
-    status = 'AC'
+    status = "AC"
 
     for case in test_cases:
         fileIn = get_input_path(
-            test_case=case
+            test_case=case,
+            host_address=host_address,
+            token=token
         )
         fileOut = get_output_path(
-            test_case=case
+            test_case=case,
+            host_address = host_address,
+            token = token
         )
         print(fileIn)
         print(fileOut)
-        '''
-        os.system("echo --.-JOHAN--$ > " + PATH_STATIC + "out.out")
+
+        print("empieza lo del os")
+        os.system("echo --.-JOHAN--$  " + "out.out")
         # print(source_code)
         os.system('chmod +x ' + source_code)
         command = "python " + source_code + ' < ' + fileIn
-        command += ' > ' + PATH_STATIC + 'out.out'
+        command += ' > ' + 'files/out.out'
 
         command_judge = Command(cmd=command)
-        # print(command)
+        print(command)
         res = command_judge.run(timeout=time_limit)
+
         if res[0]:
-            status = res[1]
+            status = "CE"
             break
 
         with open(fileOut) as fileAc:
-            with open(PATH_STATIC + 'out.out') as fileVer:
+            with open("files/out.out") as fileVer:
                 lineAc = fileAc.read()
                 lineVer = fileVer.read()
                 while lineAc and lineVer:
                     if lineAc.strip() != lineVer.strip():
-                        status = 'WA'
+                        status = "WA"
                         break
                     lineAc = fileAc.read()
                     lineVer = fileVer.read()
-        if status != 2:
+        if status != "AC":
             break
-    changue_state(id, , status)
-    '''
+    change_state_submission(
+        submission=submission,
+        verdict=status
+    )
+    print(status)
+    clear_all()
 
