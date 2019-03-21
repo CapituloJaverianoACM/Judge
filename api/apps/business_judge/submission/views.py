@@ -1,11 +1,13 @@
 from rest_framework import status, viewsets, serializers
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from .models import (
     Submission
 )
 from .selectors import (
-    get_all_submissions
+    get_all_submissions,
+    get_source_code_by_id
 )
 from .services import (
     create_submission
@@ -70,3 +72,17 @@ class SubmissionViewSet(
             'Ok',
             status=status.HTTP_201_CREATED
         )
+
+    def get_source_code(self, request, id):
+
+        file = get_source_code_by_id(
+            id=id
+        )
+        return file
+
+    def get_permissions(self):
+        if self.action == 'get_source_code':
+            permission_classes = [IsAdminUser]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
