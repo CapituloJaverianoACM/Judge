@@ -1,4 +1,5 @@
 import pathlib
+import shutil
 import signal
 import threading
 import subprocess
@@ -192,7 +193,8 @@ def get_token(
 def clear_all(
 
 ):
-    pass
+    path = pathlib.Path("files/")
+    shutil.rmtree(path)
 
 class Command(object):
     def __init__(self, cmd):
@@ -202,8 +204,11 @@ class Command(object):
     def run(self, timeout):
         def target():
             print('Thread started')
-            self.process = subprocess.Popen(self.cmd, shell=True,
-                                               preexec_fn=os.setsid)
+            self.process = subprocess.Popen(
+                self.cmd,
+                shell=True,
+                preexec_fn=os.setsid
+            )
             self.process.communicate()
             print('Thread finished')
 
@@ -215,8 +220,8 @@ class Command(object):
             print('Terminating process')
             os.killpg(self.process.pid, signal.SIGTERM)
             thread.join()
-            return (self.process.returncode, 4)
-        return (self.process.returncode, 5)
+            return self.process.returncode, 4
+        return self.process.returncode, 5
 
 
 def judge_submission_process(
@@ -232,8 +237,6 @@ def judge_submission_process(
     :param token:
     :return:
     '''
-
-
 
     submission = get_submission_by_id(
         id=submission_id
