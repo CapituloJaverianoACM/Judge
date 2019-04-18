@@ -33,7 +33,9 @@ def get_source_code_by_id(
         raise ValidationError("Source code not exists")
     with open(filename, 'rb') as f:
         response = HttpResponse(f.read(),
-                                content_type='application/x-www-form-urlencoded')
+                                content_type='application/x-www-form'
+                                             '-urlencoded')
         response['Content-Disposition'] = 'attachment; filename=' + filename
-        response['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8'
+        response['Content-Type'] = 'application/x-www-form-urlencoded; ' \
+                                   'charset=utf-8 '
         return response

@@ -19,7 +19,7 @@ class TestCaseViewSet(
     def get_input_by_id(self, request, id):
 
         test_input = get_input_file_by_id(
-          id=id
+            id=id
         )
         return test_input
 

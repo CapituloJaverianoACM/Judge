@@ -14,7 +14,6 @@ from .constants import (
 )
 
 
-
 def create_submission(
         *,
         user: str,
@@ -37,4 +36,3 @@ def create_submission(
     )
 
     return submission
-
