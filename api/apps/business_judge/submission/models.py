@@ -1,3 +1,4 @@
+from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from datetime import datetime
@@ -12,7 +13,7 @@ from .constants import (
 
 
 def directory_submissions_path(instance, filename):
-    path = 'submissions/{0}/{1}'\
+    path = 'submissions/{0}/{1}' \
         .format(
             instance.user.username,
             filename
@@ -58,7 +59,9 @@ class Submission(BaseModel):
     def get_total_cases(self):
         return Problem.objects.filter(
             id=self.problem.id
-        ).Count(
-            'test_cases',
-            distinct=True
-        )
+        ).annotate(
+            total_cases=Count(
+                'test_cases',
+                distinct=True
+            )
+        )[0].total_cases
