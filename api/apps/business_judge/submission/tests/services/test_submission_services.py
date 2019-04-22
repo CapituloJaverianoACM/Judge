@@ -43,7 +43,8 @@ class CreateSubmissionTest(TestCase):
             user=self.user.username,
             problem=self.problem.id,
             source_code=tempfile.NamedTemporaryFile().name,
-            language="PY3"
+            language="PY3",
+            host_address="localhost"
         )
 
         self.assertEqual(
