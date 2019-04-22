@@ -51,6 +51,10 @@ jobs:
         - docker tag $REGISTRY_URL_CELERY:$TRAVIS_PULL_REQUEST_SHA $REGISTRY_URL_CELERY:latest
         - docker push $REGISTRY_URL_CELERY
         - echo $?
+        - echo docker build -f DockerfileCelery.prod -t $CI_PROJECT_NAME_CELERY .
+        - echo docker tag $CI_PROJECT_NAME_CELERY $REGISTRY_URL_CELERY:$TRAVIS_PULL_REQUEST_SHA
+        - echo tag $REGISTRY_URL_CELERY:$TRAVIS_PULL_REQUEST_SHA $REGISTRY_URL_CELERY:latest
+        - echo push $REGISTRY_URL_CELERY
 
 
 
