@@ -19,7 +19,7 @@ ADD . /code/
 
 WORKDIR /code
 
-RUN pip install -r requirements/production.txt
+RUN pip install -r requirements/common.txt
 
 
 RUN chown -R user:user /code
@@ -32,4 +32,8 @@ EXPOSE 8402
 
 ENV DJANGO_SETTINGS_MODULE=api.settings.basic
 
-CMD ["celery", "-A", "api ", "worker", "-l", "info"]
+WORKDIR /code/api
+
+RUN pwd
+
+CMD ["celery", "-A", "api.celery", "worker", "-l", "info"]
